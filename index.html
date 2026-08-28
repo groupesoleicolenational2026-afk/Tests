@@ -42,17 +42,17 @@
             margin-bottom: 25px;
         }
 
-        .group-badge {
-            display: inline-block;
-            background-color: #e8f5e9;
-            color: var(--primary-color);
-            border: 1px solid var(--secondary-color);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: bold;
+        .logo-container {
             margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .logo-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         header h1 {
@@ -168,13 +168,16 @@
 
 <div class="container">
     <header>
-        <div class="group-badge">🌿 مجموعة التكوين والتأطير</div>
+        <div class="logo-container">
+            <img src="logo.png" alt="شعار مجموعة التكوين والتأطير" onerror="this.src='https://i.ibb.co/6P7q9z0/logo.jpg'">
+        </div>
         <h1>🫒 اختبار في المحور الأول: إنتاج زيت الزيتون ذو جودة عالية</h1>
         <p>الحلقتان الأولى والثانية: تقييم المادة الأولية والاستقبال بالمعصرة</p>
     </header>
 
     <div id="quiz-form">
-        </div>
+        <!-- الأسئلة تظهر ديناميكياً هنا -->
+    </div>
 
     <div class="btn-container" id="nav-buttons" style="display: none;">
         <button id="prev-btn" onclick="prevQuestion()" style="display: none;">السابق</button>
