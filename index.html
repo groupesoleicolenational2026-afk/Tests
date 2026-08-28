@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار هندسة إنتاج زيت الزيتون - المحور الأول</title>
+    <style>
+        :root {
+            --primary-color: #2c5e3b;
+            --secondary-color: #558b2f;
+            --accent-color: #f4f6f0;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 0 0 10px 0;
+        }
+
+        header p {
+            color: #666;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .question-card {
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .question-card.active {
+            display: block;
+        }
+
+        .question-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            background: #f9fbf8;
+            border: 2px solid #e2e8f0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary-color);
+            background: #f1f8e9;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background: #e8f5e9;
+            font-weight: bold;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #1e3f27;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .result-container {
+            text-align: center;
+            display: none;
+        }
+
+        .result-container h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .score-box {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 20px 0;
+        }
+
+        .feedback-msg {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🫒 اختبار هندسة إنتاج زيت الزيتون</h1>
+        <p>الحلقتان الأولى والثانية: تقييم المادة الأولية والاستقبال بالمصرة</p>
+    </header>
+
+    <div id="quiz-form">
+        <!-- الأسئلة تظهر ديناميكياً هنا -->
+    </div>
+
+    <div class="btn-container" id="nav-buttons" style="display: none;">
+        <button id="prev-btn" onclick="prevQuestion()" style="display: none;">السابق</button>
+        <div style="flex-grow: 1;"></div>
+        <button id="next-btn" onclick="nextQuestion()">التالي</button>
+    </div>
+
+    <div class="result-container" id="result-screen">
+        <h2>نتيجة الاختبار الميداني 🏆</h2>
+        <div class="score-box" id="score-display">0 / 6</div>
+        <div class="feedback-msg" id="feedback-text"></div>
+        <button onclick="restartQuiz()">إعادة الاختبار</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            title: "1. ما هي العلاقة الحقيقية بين حقل الزيتون والمعصرة الحديثة في إنتاج زيت \"بكر ممتاز\"؟",
+            options: [
+                "المعصرة الحديثة قادرة على تصحيح جميع عيوب التخمر وسوء النقل السابقة.",
+                "المعصرة تضمن الاستخلاص الأمثل، لكنها لا تستطيع أبداً إعادة بناء ما هدمته الحرارة وسوء الحصاد.",
+                "الجودة تعتمد بنسبة 100% على كفاءة المعصرة بغض النظر عن حالة الحقل."
+            ],
+            correct: 1
+        },
+        {
+            title: "2. أي مراحل نضج الثمار تحقق أفضل توازن بين كمية الزيت المستخرجة، جودته العالية، وصحته؟",
+            options: [
+                "الجني المبكر جداً.",
+                "النضج المتوازن.",
+                "الجني المتأخر."
+            ],
+            correct: 1
+        },
+        {
+            title: "3. لماذا يُعد خلط الزيتون الساقط على الأرض مع الزيتون المقطوف من الشجرة خطأً جسيماً؟",
+            options: [
+                "لأنه يقلل فقط من كمية الزيت دون تأثير على النكهة.",
+                "لأنه يتعرض للرطوبة والبكتيريا والفطريات، مما يرفع الحموضة ويفسد الدفعة بأكملها.",
+                "لأنه يسبب كسر الآلات داخل المعصرة فقط."
+            ],
+            correct: 1
+        },
+        {
+            title: "4. لماذا يُمنع استخدام الأكياس البلاستيكية الكبيرة لنقل وتخزين الزيتون؟",
+            options: [
+                "لأنها ترفع حرارة الثمار، تكتمها، وتسبب تخمراً لاهوائياً سريعاً.",
+                "لأنها غالية الثمن مقارنة بالصناديق البلاستيكية.",
+                "لأنها تسهل سرقة الثمار أثناء الطريق."
+            ],
+            correct: 0
+        },
+        {
+            title: "5. ما هو أول قرار يجب أن يتخذه رب المعصرة فور وصول الشحنة؟",
+            options: [
+                "إدخال الشحنة مباشرة إلى خط الإنتاج دون فحص لتوفير الوقت.",
+                "تقييم المادة الخام (النظر، الشم، الفحص) ومعرفة حالتها قبل أي معالجة.",
+                "خلط جميع الدفعات مع بعضها لتوحيد الإنتاج."
+            ],
+            correct: 1
+        },
+        {
+            title: "6. إذا استقبلت المعصرة دفعة زيتون تظهر عليها علامات التعفن أو التخمر، ما التصرف الصحيح؟",
+            options: [
+                "خلطها مع الزيتون السليم لتخفيف تأثيرها.",
+                "عزلها وفصلها وعدم خلطها بالدفعات الجيدة لضمان عدم إفساد الجودة.",
+                "تركها مكدسة لأيام حتى تبرد تلقائياً."
+            ],
+            correct: 1
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(questions.length).fill(null);
+
+    const quizForm = document.getElementById('quiz-form');
+    const navButtons = document.getElementById('nav-buttons');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const resultScreen = document.getElementById('result-screen');
+    const scoreDisplay = document.getElementById('score-display');
+    const feedbackText = document.getElementById('feedback-text');
+
+    function renderQuestion() {
+        quizForm.innerHTML = '';
+        navButtons.style.display = 'flex';
+
+        const q = questions[currentQuestion];
+        let html = `<div class="question-card active">
+            <div class="question-title">${q.title}</div>
+            <div class="options-list">`;
+        
+        q.options.forEach((opt, idx) => {
+            const isSelected = userAnswers[currentQuestion] === idx ? 'selected' : '';
+            html += `<div class="option-item ${isSelected}" onclick="selectOption(${idx})">${opt}</div>`;
+        });
+
+        html += `</div></div>`;
+        quizForm.innerHTML = html;
+
+        prevBtn.style.display = currentQuestion === 0 ? 'none' : 'block';
+        nextBtn.innerText = currentQuestion === questions.length - 1 ? 'إرسال وعرض النتيجة' : 'التالي';
+    }
+
+    function selectOption(optionIndex) {
+        userAnswers[currentQuestion] = optionIndex;
+        renderQuestion();
+    }
+
+    function nextQuestion() {
+        if (userAnswers[currentQuestion] === null) {
+            alert('الرجاء اختيار إجابة قبل الانتقال للسؤال التالي.');
+            return;
+        }
+
+        if (currentQuestion < questions.length - 1) {
+            currentQuestion++;
+            renderQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            renderQuestion();
+        }
+    }
+
+    function showResults() {
+        quizForm.style.display = 'none';
+        navButtons.style.display = 'none';
+        resultScreen.style.display = 'block';
+
+        let score = 0;
+        userAnswers.forEach((ans, idx) => {
+            if (ans === questions[idx].correct) {
+                score++;
+            }
+        });
+
+        scoreDisplay.innerText = `${score} / ${questions.length}`;
+
+        if (score === 6) {
+            feedbackText.innerText = "🌟 ممتاز! أداء رائع، أنت خبير ميداني معتمد في جودة زيت الزيتون.";
+        } else if (score >= 4) {
+            feedbackText.innerText = "👏 جيد جداً، لديك إلمام ممتاز بقواعد الجودة الميدانية.";
+        } else {
+            feedbackText.innerText = "💡 نتيجة مقبولة، نوصي بمراجعة تفاصيل الحلقتين الأولى والثانية لتعزيز الممارسات المهنية.";
+        }
+    }
+
+    function restartQuiz() {
+        currentQuestion = 0;
+        userAnswers.fill(null);
+        resultScreen.style.display = 'none';
+        quizForm.style.display = 'block';
+        renderQuestion();
+    }
+
+    // بدء الاختبار
+    renderQuestion();
+</script>
+
+</body>
+  </html>
+  
