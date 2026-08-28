@@ -42,10 +42,24 @@
             margin-bottom: 25px;
         }
 
+        .group-badge {
+            display: inline-block;
+            background-color: #e8f5e9;
+            color: var(--primary-color);
+            border: 1px solid var(--secondary-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
         header h1 {
             color: var(--primary-color);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin: 0 0 10px 0;
+            line-height: 1.4;
         }
 
         header p {
@@ -68,6 +82,7 @@
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 15px;
+            line-height: 1.5;
         }
 
         .options-list {
@@ -153,15 +168,13 @@
 
 <div class="container">
     <header>
-        
-        <h1> مجموعة التكوين و التأطير</h1>
-        <h1>🫒  اختبار في المحور الأول : إنتاج زيت الزيتون ذو جودة عالية</h1>
-        <p>الحلقتان الأولى والثانية: تقييم المادة الأولية والاستقبال بالمصرة</p>
+        <div class="group-badge">🌿 مجموعة التكوين والتأطير</div>
+        <h1>🫒 اختبار في المحور الأول: إنتاج زيت الزيتون ذو جودة عالية</h1>
+        <p>الحلقتان الأولى والثانية: تقييم المادة الأولية والاستقبال بالمعصرة</p>
     </header>
 
     <div id="quiz-form">
-        <!-- الأسئلة تظهر ديناميكياً هنا -->
-    </div>
+        </div>
 
     <div class="btn-container" id="nav-buttons" style="display: none;">
         <button id="prev-btn" onclick="prevQuestion()" style="display: none;">السابق</button>
@@ -329,5 +342,4 @@
 </script>
 
 </body>
-  </html>
-  
+</html>
